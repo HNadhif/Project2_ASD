@@ -1,0 +1,132 @@
+# ==========================================
+# IDE & Text Editors
+# ==========================================
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains (IntelliJ, PyCharm, WebStorm, PhpStorm, Android Studio, dll.)
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+cmake-build-*/
+
+# Eclipse
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Visual Studio (C# / C++ / .NET)
+.vs/
+*.user
+*.userosv
+*.suo
+*.sln.docstates
+[Dd]ebug/
+[Rr]elease/
+
+# Xcode (macOS / iOS)
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckpoint
+*.moved-aside
+DerivedData/
+
+# Sublime Text / Vim / Emacs
+*.sublime-workspace
+*.sublime-project
+*~
+*.swp
+*.swo
+\#*\#
+.\#*
+
+# ==========================================
+# Sistem Operasi (OS)
+# ==========================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ==========================================
+# Environment & File Sensitif
+# ==========================================
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.cert
+*.pfx
+
+# ==========================================
+# Log & Temporary Files
+# ==========================================
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.pid
+*.seed
+*.pids
+
+# ==========================================
+# Package Manager & Build Artifacts (Umum)
+# ==========================================
+node_modules/
+dist/
+build/
+target/
+coverage/
+.npm
+.yarn/cache
+.yarn/unplugged
