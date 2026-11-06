@@ -76,7 +76,7 @@ public class DLL {
     public Node find(String kode) {
         Node current = head;
         while (current != null) {
-            if (current.data != null && current.data.kode.equalsIgnoreCase(kode)) {
+            if (current.data.kode.equals(kode)) {
                 return current;
             }
             current = current.next;

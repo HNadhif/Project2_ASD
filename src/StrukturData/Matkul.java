@@ -16,10 +16,6 @@ public class Matkul {
         this.semester = semester;
         this.jenis = jenis;
         this.lulus = false;    
-        this.data = null;    
-    }
-    public Matkul() {
-        this.lulus = false;
-        this.data = null;
+        this.data = new GraphNode(this);    
     }
 }
