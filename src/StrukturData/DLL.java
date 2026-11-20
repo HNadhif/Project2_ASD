@@ -73,14 +73,7 @@ public class DLL {
         }
     }
 
-    public Node find(String kode) {
-        Node current = head;
-        while (current != null) {
-            if (current.data.kode.equals(kode)) {
-                return current;
-            }
-            current = current.next;
-        }
-        return null;
+    public Matkul getMatkulHead() {
+        return head.data;
     }
 }

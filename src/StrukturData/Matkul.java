@@ -6,8 +6,7 @@ public class Matkul {
     public int sks;
     public int semester;
     public String jenis;       
-    public boolean lulus;      
-    public GraphNode nodeG;     
+    public boolean lulus;         
 
     public Matkul(String kode, String nama, int sks, int semester, String jenis) {
         this.kode = kode;
@@ -16,6 +15,5 @@ public class Matkul {
         this.semester = semester;
         this.jenis = jenis;
         this.lulus = false;    
-        this.nodeG = new GraphNode(this);    
     }
 }

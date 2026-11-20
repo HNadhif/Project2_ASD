@@ -10,4 +10,10 @@ public class Node {
         this.next = null;
         this.prev = null;
     }
+
+    public Node(Matkul n){
+        this.data = n;
+        this.next = null;
+        this.prev = null;
+        }
 }
