@@ -48,7 +48,6 @@ public class Main {
 
             System.out.println("\nFile: " + fileDipilih.getName());
             System.out.println("Semester berikutnya: " + semesterBerikutnya);
-            graph.printStatusLulus();
 
             // Nanti tugas nomer 2 disini
         }
