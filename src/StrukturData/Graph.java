@@ -15,6 +15,49 @@ public class Graph {
         load();
     }
 
+    public void resetLulus() {
+        for (int i = 0; i < size; i++) {
+            if (vertex[i] != null && !vertex[i].isEmpty()) {
+                vertex[i].head.data.lulus = false;
+            }
+        }
+    }
+
+    public void setLulus(String[] daftarKode) {
+        // Set semua head di array jadi false dulu
+        resetLulus();
+
+        if (daftarKode == null) {
+            return;
+        }
+
+        for (String kode : daftarKode) {
+            String target = kode.trim();
+            if (target.isEmpty()) {
+                continue;
+            }
+
+            // Urut/loop array vertex untuk mencari kode yang cocok
+            for (int i = 0; i < size; i++) {
+                if (vertex[i] != null && !vertex[i].isEmpty()
+                        && vertex[i].head.data.kode.equalsIgnoreCase(target)) {
+                    vertex[i].head.data.lulus = true;
+                    break;
+                }
+            }
+        }
+    }
+
+    // Opsional buat ngetes apakah status lulus sudah benar terset (Nanti siapapun yang lihat hapus aja atau biarin, silahkan)
+    public void printStatusLulus() {
+        for (int i = 0; i < size; i++) {
+            if (vertex[i] != null && !vertex[i].isEmpty()) {
+                Matkul m = vertex[i].head.data;
+                System.out.println(m.kode + " - " + m.nama + " | Lulus: " + m.lulus);
+            }
+        }
+    }
+
     private void load(){
         // Hitung banyak Mapel
         try (BufferedReader br = new BufferedReader(new FileReader(filepath1))){
@@ -42,7 +85,7 @@ public class Graph {
                 int sks = Integer.parseInt(data[2].trim());
                 int semester = Integer.parseInt(data[3].trim());
 
-
+                vertex[index] = new DLL();
                 vertex[index++].addLast(new Node(data[0].trim(), data[1].trim(), sks, semester, data[4].trim()));
             }
         } catch(IOException e) {
