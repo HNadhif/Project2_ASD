@@ -49,7 +49,7 @@ public class Main {
             System.out.println("\nFile: " + fileDipilih.getName());
             System.out.println("Semester berikutnya: " + semesterBerikutnya);
 
-            // Nanti tugas nomer 2 disini
+            graph.cekMatkulBisaDiambil(semesterBerikutnya);
         }
         scanner.close();
     }
