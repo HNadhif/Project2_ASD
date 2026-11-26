@@ -56,6 +56,14 @@ public class Graph {
         return m.jenis.equalsIgnoreCase(target) || m.jenis.equalsIgnoreCase("Keduanya");
     }
 
+    private boolean isSkripsi(Matkul m) {
+        return m != null && (m.kode.trim().equalsIgnoreCase("SKR") || m.nama.trim().equalsIgnoreCase("Skripsi"));
+    }
+
+    private boolean hasPrasyarat(DLL list) {
+        return list != null && list.head != null && list.head.next != null;
+    }
+
     private boolean semuaPrasyaratLulus(DLL list) {
         Node curr = list.head.next;
         while (curr != null) {
@@ -82,6 +90,19 @@ public class Graph {
         return sb.toString();
     }
 
+    private boolean semuaMkWajibLainnyaLulus() {
+        for (int i = 0; i < size; i++) {
+            if (vertex[i] == null || vertex[i].isEmpty()) {
+                continue;
+            }
+            Matkul m = vertex[i].head.data;
+            if (!isSkripsi(m) && !m.lulus) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void cekMatkulBisaDiambil(String semesterBerikutnya) {
         int semesterTertinggi = 0;
         for (int i = 0; i < size; i++) {
@@ -101,31 +122,61 @@ public class Graph {
                 continue;
             }
             Matkul m = vertex[i].head.data;
-            if (!m.lulus && sesuaiSemesterBerikutnya(m, semesterBerikutnya) && semuaPrasyaratLulus(vertex[i])) {
-                System.out.printf("- [%s] %s (%d SKS, Sem %d, %s)%n",
-                        m.kode, m.nama, m.sks, m.semester, m.jenis);
-                adaBisa = true;
+            if (!m.lulus && sesuaiSemesterBerikutnya(m, semesterBerikutnya)) {
+                if (isSkripsi(m)) {
+                    // Aturan Khusus Skripsi
+                    if (semuaMkWajibLainnyaLulus()) {
+                        System.out.printf("- [%s] %s (%d SKS, Sem %d, %s)%n",
+                                m.kode, m.nama, m.sks, m.semester, m.jenis);
+                        adaBisa = true;
+                    }
+                } else if (!hasPrasyarat(vertex[i])) {
+                    // MK Tanpa Prasyarat
+                    System.out.printf("- [%s] %s (%d SKS, Sem %d, %s)%n",
+                            m.kode, m.nama, m.sks, m.semester, m.jenis);
+                    adaBisa = true;
+                } else {
+                    // MK Dengan Prasyarat
+                    if (semuaPrasyaratLulus(vertex[i])) {
+                        System.out.printf("- [%s] %s (%d SKS, Sem %d, %s)%n",
+                                m.kode, m.nama, m.sks, m.semester, m.jenis);
+                        adaBisa = true;
+                    }
+                }
             }
         }
         if (!adaBisa) {
             System.out.println("(Tidak ada mata kuliah yang bisa diambil)");
         }
 
-        System.out.println("\n--- Mata Kuliah yang TIDAK BISA Diambil ---");
-        boolean adaTidakBisa = false;
+        System.out.println("\n--- Mata Kuliah Semester depan yang belum bisa diambil ---");
+        boolean adaBelumBisa = false;
+        int batasSemester = semesterTertinggi + 1;
         for (int i = 0; i < size; i++) {
             if (vertex[i] == null || vertex[i].isEmpty()) {
                 continue;
             }
             Matkul m = vertex[i].head.data;
-            if (!m.lulus && sesuaiSemesterBerikutnya(m, semesterBerikutnya) && !semuaPrasyaratLulus(vertex[i])) {
-                System.out.printf("- [%s] %s (%d SKS, Sem %d, %s) -> Belum lulus prasyarat: %s%n",
-                        m.kode, m.nama, m.sks, m.semester, m.jenis, getPrasyaratBelumLulus(vertex[i]));
-                adaTidakBisa = true;
+            if (!m.lulus && sesuaiSemesterBerikutnya(m, semesterBerikutnya) && m.semester <= batasSemester) {
+                if (isSkripsi(m)) {
+                    // Aturan Khusus Skripsi
+                    if (!semuaMkWajibLainnyaLulus()) {
+                        System.out.printf("- [%s] %s (%d SKS, Sem %d, %s) -> Belum menyelesaikan semua MK wajib%n",
+                                m.kode, m.nama, m.sks, m.semester, m.jenis);
+                        adaBelumBisa = true;
+                    }
+                } else if (hasPrasyarat(vertex[i])) {
+                    // MK Dengan Prasyarat
+                    if (!semuaPrasyaratLulus(vertex[i])) {
+                        System.out.printf("- [%s] %s (%d SKS, Sem %d, %s) -> Belum lulus prasyarat: %s%n",
+                                m.kode, m.nama, m.sks, m.semester, m.jenis, getPrasyaratBelumLulus(vertex[i]));
+                        adaBelumBisa = true;
+                    }
+                }
             }
         }
-        if (!adaTidakBisa) {
-            System.out.println("(Semua mata kuliah yang ditawarkan sudah memenuhi prasyarat)");
+        if (!adaBelumBisa) {
+            System.out.println("(Semua mata kuliah yang ditawarkan sudah memenuhi syarat)");
         }
     }
 
